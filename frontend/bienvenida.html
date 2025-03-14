@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenido</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        .container { margin-top: 50px; }
+        button { padding: 10px; margin-top: 20px; cursor: pointer; }
+    </style>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>¡Bienvenido!</h1>
+        <p id="user-email"></p>
+        <button id="logout">Cerrar Sesión</button>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const userEmail = localStorage.getItem("user");
+
+            if (!userEmail) {
+                window.location.href = "index.html"; // Redirigir si no hay sesión activa
+            } else {
+                document.getElementById("user-email").textContent = "Usuario: " + userEmail;
+            }
+
+            // Cerrar sesión
+            document.getElementById("logout").addEventListener("click", () => {
+                localStorage.removeItem("user");
+                window.location.href = "index.html"; // Redirigir al login
+            });
+        });
+    </script>
+</body>
+</html>
