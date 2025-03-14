@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
     }
 
-    loginForm.addEventListener("submit", async (event) => {
+    loginForm.addEventListener("submit", (event) => {
         event.preventDefault();
 
         const email = document.getElementById("email").value.trim();
@@ -43,18 +43,13 @@ document.addEventListener("DOMContentLoaded", () => {
         loginButton.disabled = true;
         loginButton.textContent = "Cargando...";
 
-        try {
-            const response = await fetch("http://localhost:5000/login", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ email, password }),
-            });
+        // Simular respuesta del servidor con setTimeout
+        setTimeout(() => {
+            const validUser = "usuario@example.com";
+            const validPassword = "123456";
 
-            const data = await response.json();
-            console.log("Respuesta del servidor:", data);
-
-            if (data.success) {
-                localStorage.setItem("user", data.user);
+            if (email === validUser && password === validPassword) {
+                localStorage.setItem("user", email);
                 showMessage("Inicio de sesión exitoso. Cargando...", "success");
 
                 setTimeout(() => {
@@ -63,14 +58,11 @@ document.addEventListener("DOMContentLoaded", () => {
             } else {
                 showMessage("Usuario o contraseña incorrectos.", "error");
             }
-        } catch (error) {
-            console.error("Error en la petición:", error);
-            showMessage("Hubo un problema con el servidor.", "error");
-        } finally {
+
             // Habilitar botón nuevamente
             loginButton.disabled = false;
             loginButton.textContent = "Iniciar Sesión";
-        }
+        }, 2000); // Simula un retraso de 2 segundos
     });
 
     // Función para mostrar mensajes de error o éxito
